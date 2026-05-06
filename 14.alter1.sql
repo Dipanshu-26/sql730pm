@@ -117,6 +117,7 @@ create table student(
 name varchar(20) not null default "unknown name"
 );
 
+
 -- drop /add/modify key constraints 
 
 

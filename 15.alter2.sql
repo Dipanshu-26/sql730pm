@@ -94,3 +94,9 @@ modify student_id int not null,
 modify column srno int unique auto_increment,
 drop primary key
 ;
+
+alter table students
+modify student_id int not null,
+add column srno int unique auto_increment after student_id,
+drop primary key
+;
