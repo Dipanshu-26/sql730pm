@@ -65,7 +65,7 @@ gender ENUM('M','F','O'),
 selected_course int NOT NULL DEFAULT 1, 
 photo_url VARCHAR(255) default null, 
 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-foreign key(selected_course) references courses(course_id)
+foreign key(selected_course) references courses(course_id) 
 );
 
 INSERT INTO students 
@@ -94,3 +94,74 @@ VALUES
 --  Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails 
 --  (`batch730pmapr`.`students`, CONSTRAINT `students_ibfk_1` FOREIGN KEY (`selected_course`) 
 --  REFERENCES `courses` (`course_id`))	0.031 sec
+
+-- ---------------------------------------------------------------------------------------------------------------------------
+
+delete from students where student_id=4;
+select * from courses;
+select * from students;
+
+delete from courses where course_id=1;
+
+INSERT INTO courses (course_id, course_name, course_duration_months, course_fee) VALUES
+(6, 'Cloud Computing', 4, 40000);
+delete from courses where course_id=6;
+
+INSERT INTO students 
+(full_name, phone, dob, gender, selected_course, photo_url)
+VALUES
+('Rahul Singh', '9876543216', '2000-05-12', 'M', 6, 'https://img.com/rahul.jpg');
+
+delete from students where student_id=15;
+
+-- -------------------------------------------------------------------------------------------------------------------------------
+-- | Option                    | Description                                                                    | Example Behavior                                      |
+-- | ------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------- |
+-- | CASCADE                   | Automatically deletes rows in child table when the parent row is deleted.      | Delete a course → delete all students in that course. |
+-- | SET NULL                  | Sets the foreign key column to NULL in child table when parent row is deleted. | Delete a course → students' `course_id` becomes NULL. |
+-- | RESTRICT                  | Prevents deletion of parent row if related rows exist in child table.          | Delete a course → fails if any student is enrolled.   |
+-- | NO ACTION (default)       | Same as RESTRICT (in MySQL). Prevents delete if child records exist.           | Delete a course → error if dependent rows exist.      |
+
+drop table students;
+CREATE TABLE students ( 
+student_id INT PRIMARY KEY auto_increment, 
+full_name VARCHAR(100) NOT NULL, 
+phone VARCHAR(15) UNIQUE, 
+dob DATE, 
+gender ENUM('M','F','O'), 
+selected_course int , 
+photo_url VARCHAR(255) default null, 
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+foreign key(selected_course) references courses(course_id) on delete set null
+);
+
+INSERT INTO students 
+(full_name, phone, dob, gender, selected_course, photo_url)
+VALUES
+('Rahul Sharma', '9876543210', '2000-05-12', 'M', 1, 'https://img.com/rahul.jpg'),
+('Priya Verma', '9123456780', '1999-11-23', 'F', 2, 'https://img.com/priya.jpg'),
+('Amit Kumar', '9000011111', '2001-03-15', 'M', 1, NULL),
+('Sneha Patil', '9988776655', '2002-07-08', 'F', 4, 'https://img.com/sneha.jpg'),
+('John Mathew', '9090909090', '1998-01-30', 'M', 3, NULL),
+('Fatima Khan', '9191919191', '2000-09-19', 'F', 2, 'https://img.com/fatima.jpg'),
+('Rohit Das', '9345678901', '2001-12-05', 'M', 5, NULL),
+('Anjali Nair', '9785612345', '1999-04-18', 'F', 4, 'https://img.com/anjali.jpg'),
+('Karan Mehta', '9654321870', '2003-02-25', 'M', 1, NULL),
+('Neha Gupta', '9567890123', '2002-06-10', 'F', 3, 'https://img.com/neha.jpg');
+
+select * from courses;
+select * from students;
+
+delete from courses where course_id=5;
+delete from courses where course_id=1;
+
+INSERT INTO courses (course_id, course_name, course_duration_months, course_fee) VALUES
+(5, 'Agentic AI', 8, 50000);
+
+
+
+
+
+
+
+
