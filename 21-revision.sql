@@ -1,0 +1,12 @@
+-- select clause 
+-- alter DDL
+-- create DDL
+-- update DML
+-- primary and foreign key 
+-- unique key 
+-- check , not null , default , 
+-- enum, 
+-- varchar , int 
+-- auto_increment
+-- trunctate and delete -- DDl DML 
+-- select 
