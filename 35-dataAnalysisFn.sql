@@ -101,13 +101,12 @@ from employees_training;
 -- ABS   → Ignore whether the floor number is + or -
 
 
-
 -- DATA CLEANING
 -- ==========================================
-
 -- IFNULL()
-
-
+select emp_id,emp_name,department,
+ifnull(department, "no dept assigned")as cleaned_department
+from employees_training;
 
 -- WINDOW FUNCTIONS (MySQL 8+)
 -- ==========================================
@@ -115,27 +114,58 @@ from employees_training;
 -- LEAD() returns a value from a subsequent (next) row in the window partition.
 
 -- LAG()
+select emp_id, emp_name,experience_years,
+lag(experience_years) over(order by emp_id) as previous_emp_exp
+from  employees_training;
 
+-- Calculate salary difference from previous employee.
+select emp_id, emp_name,salary,
+salary - lag(salary) over(order by emp_id) as difference_salary
+from  employees_training;
 
+-- lead 
+select emp_id, emp_name,experience_years,
+lead(experience_years) over(order by emp_id) as previous_emp_exp
+from  employees_training;
+
+select emp_id, emp_name,salary,
+salary - lead(salary) over(order by emp_id) as difference_salary
+from  employees_training;
 
 -- ROW_NUMBER()
 -- ==========================================
-
-
-
-
 -- RANK()
 -- ==========================================
-
-
-
-
 -- DENSE_RANK()
 -- ==========================================
 
 
-
-
-
 -- SUM() OVER() – Running total of experience
 -- ==========================================
+select firstname, location,salary,
+sum(salary) over (order by firstname) as running_total_salary
+from employee;
+
+-- --------------------------------------------------------------------------------------
+select * from students;
+-- AVG() OVER() – Average experience per source of joining
+select full_name, location,years_of_exp,source_of_joining,
+avg(years_of_exp) over (partition by source_of_joining) as avg_yrs_of_exp
+from students;
+
+
+-- ---------------------------
+-- full_name==> concat
+-- age >=30 ==> senior
+-- age<30 ==> junior  
+-- case -- when ---then 
+-- employee
+-- ----------------------------------
+
+-- full_name_middliename ==> concat 
+-- exp >=5 ==> senior
+-- exp<5 ==> junior  
+-- case -- when ---then 
+-- total_no_days  ==>datediff
+-- employees_training
+
