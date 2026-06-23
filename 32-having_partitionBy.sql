@@ -27,16 +27,10 @@ select source_of_joining , count(*) as total from students where source_of_joini
 select location , count(*) as total from students where years_of_exp > 9 group by location having total > 1;
 
 -- important do filtering as soon as possible so we do not do havy crunching and latter filtering.
-
-
 -- ---where is used before group by and do filtering on individual records
-
 -- ---having is used after group by and do filtering on aggregated records.
-
 -- ----we can use where and having in the same query also. 
-
 -- ----where is more performant than having ..
-
 -- ------------------------------------------------------------------------------------------------------------------
 -- over and partition by 
 show tables;
